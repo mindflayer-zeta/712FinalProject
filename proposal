@@ -1,1 +1,34 @@
-Individual final projects
+Project Proposal: Gene Analysis and Screening Post-Processing Tools
+
+The aim of this project is to develop a user-friendly web-based application that simplifies the analysis and screening of pathogenic genes from gene expression data obtained from the Gene Expression Omnibus (GEO). This workflow will assist researchers in identifying key disease-causing genes by data preprocessing, statistical analysis, and providing user-friendly filtering options. The project will incorporate the following key components:
+
+----Preprocessing, Statistical Analysis and P-Value Calculation: (R language)----
+
+Download raw gene expression data from GEO. R language will be used for initial data preprocessing to filter and clean the data, ensuring data quality. Perform a two-sample T-test on the preprocessed data to calculate p-values for each gene. Genes with smaller p-values indicate a significant difference between disease and healthy groups, highlighting their potential association with the disease. At this time, if you directly output the gene in R, it may contain "" or other non-standard formats, which is not conducive to our next analysis. For example, the DAVID database may fail to identify it.
+
+----Database Creation: (MySQL)----
+
+The p-value data and gene id will be exported to a CSV file, and a MySQL database will be created to store the gene information.
+
+----User-Friendly Interface: (MySQL connecting, Python CGI programming, HTML5 document markup, JavaScript, CSS3)----
+
+A web-based user interface will be developed using Python CGI programming, HTML5, JavaScript, and CSS3 (if needed). Researchers, even without coding knowledge, will be able to input their criteria for gene selection. 
+
+The tool will allow users to set two thresholds:
+Output Quantity Threshold: This determines the maximum number of genes to display as results. For instance, setting it to 10 will display the top 10 genes with the smallest p-values.
+P-Value Size Threshold: This controls which genes are displayed based on their p-values. For instance, setting it to 0.05 will display all genes with p-values < 0.05.
+6. Visualization and Styling:
+
+The user interface will be enhanced with Java and CSS3 to improve its aesthetics and usability.
+
+----Reproducibility----
+For demonstration purposes, the project will use the GDS287 dataset, which contains gene expression data related to skeletal muscle biopsies in healthy young and aged men. This dataset allows users to explore molecular signatures associated with muscle aging. The project will be designed to be reproducible, allowing researchers to apply the same methodology to different GEO datasets, thereby facilitating various analyses related to gene expression.
+
+----Expected Outcomes----
+Researchers will have access to a user-friendly tool for identifying pathogenic genes.
+The tool will automate data preprocessing, statistical analysis, and gene selection based on user-defined thresholds.
+Users can export the results in a standard and reproducible format for further analysis.
+The project will be documented comprehensively, providing clear instructions for usage, code replication, and dataset expansion.
+
+Conclusion:
+This project aims to empower researchers by simplifying the analysis and screening of pathogenic genes using gene expression data from GEO. By providing a user-friendly interface, customizable filtering options, and database integration, the tool will enhance the efficiency of identifying disease-causing genes. Additionally, its reproducibility ensures that researchers can apply the methodology to a wide range of datasets, expanding its utility in the field of bioinformatics.
