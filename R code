@@ -1,0 +1,72 @@
+#prepare
+setwd("C:/Users/z1550/Desktop/712/Final")
+library(GEOquery)
+dataset <- getGEO("GDS287")
+data0 <- Table(dataset)
+
+#Rename rownames with ID_REF (gene)
+rownames(data0) <- data0[,1]
+
+#remove ID_REF IDENTIFIER and suspect cancer samples
+data <- subset(data0, select=-c(1,2))
+for (i in 1:7)  { names(data)[i] <- paste("21-27_years",  names(data[i]), sep = "_") }
+for (i in 8:15)  { names(data)[i] <- paste("67-75_years",  names(data[i]), sep = "_") }
+
+#remove NA
+data <- data[rowSums(is.na(data))!=ncol(data),]
+
+#idtentify outliner by avg correlation plot
+dat.cor <- cor(data)
+dat.avg <- apply(dat.cor,1,mean)
+par(oma=c(3,0.1,0.1,0.1))
+plot(c(1,length(dat.avg)),range(dat.avg),type="n",xlab="",ylab="Avg r",main="Avg correlation plot for idtentify outliner",axes=F)
+points(dat.avg,bg="red",col=1,pch=21,cex=0.5)
+axis(1,at=c(1:length(dat.avg)),labels=dimnames(data)[[2]],las=2,cex.lab=0.7,cex.axis=0.7)
+axis(2)
+abline(v=seq(0.5,187.5,1),col="black")
+
+#idtentify outliner by heat map
+cor_matrix <- cor(data)
+library(corrplot)
+corrplot(cor_matrix, method = "color")
+title("heat map for idtentify outliner", line = 2)
+
+#remove outlier (NULL)
+
+#filter low expression gene
+gene_cv <- apply(data, 1, function(x) sd(x) / mean(x))
+gene_cv_df <- data.frame(Gene = rownames(data), CV = gene_cv)
+library(dplyr)
+library(ggplot2)
+ggplot(gene_cv_df, aes(x = CV)) +
+  geom_histogram(binwidth = 0.1, fill = "skyblue", color = "black") +
+  labs(title = "Distribution of Coefficient of Variation",
+       x = "Coefficient of Variation (CV)") +
+  theme_minimal()
+cv_threshold <- 0.2
+gene_keep <- gene_cv_df %>% filter(CV >= cv_threshold)
+dat_filter <- data[rownames(data) %in% rownames(gene_keep), ]
+
+#Two-sample t-test
+log2_data <- log2(dat_filter)
+col_names <- names(dat_filter)
+young_cols <- col_names[grep("21-27_years", col_names)]
+old_cols <- col_names[grep("67-75_years", col_names)]
+
+t.test.all.genes <- function(x,s1,s2) {
+  x1 <- x[s1]
+  x2 <- x[s2]
+  x1 <- as.numeric(x1)
+  x2 <- as.numeric(x2)
+  t.out <- t.test(x1,x2, alternative="two.sided",var.equal=T)
+  out <- as.numeric(t.out$p.value)
+  return(out)
+}
+
+options(scipen = 999)
+
+pv <- apply(log2_data,1,t.test.all.genes,s1=young_cols,s2=old_cols)
+
+dat_filter$p_values <- pv
+
+pre_sql <- data.frame(Gene = rownames(dat_filter), pv = dat_filter$p_values)
