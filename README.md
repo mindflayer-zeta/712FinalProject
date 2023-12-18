@@ -31,6 +31,7 @@ Use the "Copy Genes" button to copy the gene names as text.
 ---Development---
 Feel free to contribute to the project by improving the code, adding new features, or enhancing the user interface. You can fork the repository, make changes, and create a pull request for review. 
 This process test uses the "GDS287" DataSet (https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS287). Due to its applicability, we can expect it to work on other similar DataSets in NCBI GEO.
+Despite including a section in the R code to identify outliers, the dataset analyzed for this project didn’t contain any outliers requiring removal. However, the relevant code remains intact within the project, ensuring preparedness for future datasets that may necessitate outlier identification and removal.
 
 ---Acknowledgements---
 This project was developed as a part of AS.410.712.81.FA23 Advanced Practical Computer Concepts for Bioinformatics Fianl Project.
