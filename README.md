@@ -11,7 +11,7 @@ R: Calculate p-value of each gene.
 SQL: Create database including gene name and pv for further uses.
 Python (CGI): Backend scripting language used to handle server-side requests and database interactions.
 HTML: Structure and content of the web pages.
-CSS: Styling for the web pages (make "Copy Genes" button more ).
+CSS: Styling for the web pages (make "Copy Genes" button more striking - Go Blue Jay).
 JavaScript: Provides functionality for the "Copy Genes" button.
 
 ---File Structure---
