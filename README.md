@@ -7,6 +7,8 @@ Search Results: Displays the searched genes along with their corresponding PV va
 Copy Genes: Provides a button to copy the generated gene names as unformatted text separated by spaces.
 
 ---Technologies Used---
+R: Calculate p-value of each gene.
+SQL: Create database including gene name and pv for further uses.
 Python (CGI): Backend scripting language used to handle server-side requests and database interactions.
 HTML: Structure and content of the web pages.
 CSS: Styling for the web pages (make "Copy Genes" button more ).
@@ -22,7 +24,7 @@ scripts.js: JavaScript file implementing the "Copy Genes" functionality.
 Ensure the Python environment with MySQL connector is set up.
 Configure the database connection details in the Python script (final.cgi).
 Place the files (final.cgi, gene_search_template.html, styles.css, scripts.js) in a web server's directory.
-Access the application via a web browser and enter desired thresholds in the search form.
+Access the application url (http://bfx3.aap.jhu.edu/ywang710/final/search.html) via a web browser with JHU VPN and enter desired thresholds in the search form.
 Click the "Search" button to display the results.
 Use the "Copy Genes" button to copy the gene names as text.
 
